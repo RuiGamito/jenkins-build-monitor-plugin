@@ -112,8 +112,12 @@ public class JobView {
     }
 
     // todo track by job.hashCode messes up the animation
+    // Rui Gamito: in order to have repeated jobs on the dashboard, we need
+    // to force the the hash to be different, as it is created based on some
+    // job property, which is the same in every reference. Also, currentTimeMillis
+    // was not enough to cause the change...
     public int hashCode() {
-        return Objects.hashCode(job.hashCode());
+        return Objects.hashCode(job.hashCode() + ((int) Math.floor(Math.random() * 1001)));
     }
 
     @Override

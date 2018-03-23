@@ -70,6 +70,9 @@
   </f:radioBlock>
 
   <f:radioBlock title="${%Specify order}" name="order" checked="${it.currentOrder()=='ExplicitOrder'}" value="explicit">
+    <f:entry title="${%Allow repeated job entries}" help="${descriptor.getHelpFile('allowRepeatedJobs')}">
+      <f:checkbox id="allowRepeatedJobs" field="allowRepeatedJobs" checked="${allowRepeatedJobs}"/>
+    </f:entry>
     <f:entry title="${%Order of jobs:}" help="${descriptor.getHelpFile('explicitOrder')}">
       <f:textbox name="explicitOrder" field="explicitOrder" value="${it.explicitOrder()}" />
     </f:entry>

@@ -49,11 +49,11 @@ public class HasHeadlineShowingRunningBuildDetailsTest {
     // --
 
     private Feature hasHeadlineThatShowsCommitters() {
-        return new HasHeadline(new HeadlineConfig(true));
+        return new HasHeadline(new HeadlineConfig(true, true));
     }
 
     private Feature hasHeadlineThatDoesNotShowCommitters() {
-        return new HasHeadline(new HeadlineConfig(false));
+        return new HasHeadline(new HeadlineConfig(false, true));
     }
 
     private String headlineOf(JobView job) {

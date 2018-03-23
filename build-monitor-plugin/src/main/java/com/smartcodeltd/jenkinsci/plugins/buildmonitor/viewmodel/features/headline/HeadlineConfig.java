@@ -5,8 +5,10 @@ package com.smartcodeltd.jenkinsci.plugins.buildmonitor.viewmodel.features.headl
  */
 public class HeadlineConfig {
     public final boolean displayCommitters;
+    public final boolean allowRepeatedJobs;
 
-    public HeadlineConfig(boolean displayCommitters) {
+    public HeadlineConfig(boolean displayCommitters, boolean allowRepeatedJobs) {
         this.displayCommitters = displayCommitters;
+        this.allowRepeatedJobs = allowRepeatedJobs;
     }
 }
