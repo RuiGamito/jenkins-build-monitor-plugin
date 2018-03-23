@@ -9,13 +9,16 @@ import hudson.model.Job;
 import java.util.Comparator;
 
 import static com.smartcodeltd.jenkinsci.plugins.buildmonitor.functions.NullSafety.getOrElse;
+import org.kohsuke.stapler.DataBoundSetter;
 
 public class Config {
 
     private boolean displayCommitters;
+    private boolean allowRepeatedJobs;
     private Comparator<Job<?, ?>> order;
     private String explicitOrder;
     private BuildFailureAnalyzerDisplayedField buildFailureAnalyzerDisplayedField;
+    private static final BuildMonitorLogger logger = BuildMonitorLogger.forClass(Config.class);
     
     public static Config defaultConfig() {
         return new Config();
@@ -61,6 +64,14 @@ public class Config {
 
     public void setDisplayCommitters(boolean flag) {
         this.displayCommitters = flag;
+    }
+    
+    public boolean shouldAllowRepeatedJobs() {
+        return getOrElse(allowRepeatedJobs, true);
+    }
+
+    public void setAllowRepeatedJobs(boolean flag) {
+        this.allowRepeatedJobs = flag;
     }
     
     @Override

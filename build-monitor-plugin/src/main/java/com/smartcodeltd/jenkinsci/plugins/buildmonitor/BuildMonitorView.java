@@ -56,8 +56,6 @@ public class BuildMonitorView extends ListView {
     private String title;
 
     /**
-     * @param name  Name of the view to be displayed on the Views tab
-     * @param title Title to be displayed on the Build Monitor; defaults to 'name' if not set
      */
     @DataBoundConstructor
     public BuildMonitorView(String name, String title) {
@@ -126,7 +124,6 @@ public class BuildMonitorView extends ListView {
                 requestedOrdering = "ExplicitOrder";
             }
             title = req.getParameter("title");
-
             currentConfig().setDisplayCommitters(json.optBoolean("displayCommitters", true));
             currentConfig().setBuildFailureAnalyzerDisplayedField(req.getParameter("buildFailureAnalyzerDisplayedField"));
             
@@ -140,8 +137,6 @@ public class BuildMonitorView extends ListView {
     }
 
     /**
-     * Because of how org.kohsuke.stapler.HttpResponseRenderer is implemented
-     * it can only work with net.sf.JSONObject in order to produce correct application/json output
      *
      * @return Json representation of JobViews
      * @throws Exception
@@ -153,7 +148,6 @@ public class BuildMonitorView extends ListView {
 
     // --
     private boolean isGiven(String value) {
-        return ! (value == null || "".equals(value));
     }
 
     private List<JobView> jobViews() {
@@ -166,28 +160,19 @@ public class BuildMonitorView extends ListView {
 
         Collections.sort(projects, currentConfig().getOrder());
 
-        for (Job project : projects) {
-            jobs.add(views.viewOf(project));
-        }
 
+            }
+        }
         return jobs;
     }
 
     /**
-     * When Jenkins is started up, Jenkins::loadTasks is called.
-     * At that point config.xml file is unmarshaled into a Jenkins object containing a list of Views, including BuildMonitorView objects.
      *
-     * The unmarshaling process sets private fields on BuildMonitorView objects directly, ignoring their constructors.
-     * This means that if there's a private field added to this class (say "config"), the previously persisted versions of this class can no longer
-     * be correctly un-marshaled into the new version as they don't define the new field and the object ends up in an inconsistent state.
      *
-     * @return the previously persisted version of the config object, default config, or the deprecated "order" object, converted to a "config" object.
      */
     private Config currentConfig() {
         if (creatingAFreshView()) {
             config = Config.defaultConfig();
-        }
-        else if (deserailisingFromAnOlderFormat()) {
             migrateFromOldToNewConfigFormat();
         }
 
@@ -223,4 +208,3 @@ public class BuildMonitorView extends ListView {
 
     @Deprecated // use Config instead
     private Comparator<Job<?, ?>> order;      // note: this field can be removed when people stop using versions prior to 1.6+build.150
-}
