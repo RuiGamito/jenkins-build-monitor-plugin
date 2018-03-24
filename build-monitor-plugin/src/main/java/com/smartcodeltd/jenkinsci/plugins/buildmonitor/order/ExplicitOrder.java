@@ -15,12 +15,16 @@ public class ExplicitOrder implements Comparator<Job<?, ?>> {
     private Map<String, Integer> order;
 
     @Override
-    // Don't really get this method, as it only compares consecutive pairs of
-    // jobs (as opposed to consecutive jobs).
-    // Removed all the content as returning -1 works in seemingly all the scenarios,
-    // both repeating and not repeating jobs.
     public int compare(Job<?, ?> first, Job<?, ?> second) {
-        return -1;
+        int firstOrder = Integer.MAX_VALUE;
+        int secondOrder = Integer.MAX_VALUE;
+        if (order.containsKey(first.getFullName())) {
+            firstOrder = order.get(first.getFullName());
+        }
+        if (order.containsKey(second.getFullName())) {
+            secondOrder = order.get(second.getFullName());
+        }
+        return firstOrder - secondOrder;
     }
 
     public void setExplicitOrder(String explicitOrder) {
